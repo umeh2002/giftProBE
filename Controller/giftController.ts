@@ -99,3 +99,26 @@ export const deditAmount = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+export const getTransactionHistory = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+  
+    try {
+      const transactions = await giftModel.find({ userId: userId });
+  
+      if (transactions.length === 0) {
+        return res.status(404).json({ message: 'No transaction history found for this user' });
+      }
+  
+      return res.status(200).json({ transactions: transactions });
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
+  };
+  
+  
+  
+  
+  
+  
