@@ -57,7 +57,7 @@ export const creditUserAccount = async (req: Request, res: Response) => {
     return res
       .status(200)
       .json({ message: "Account credited successfully", data: transaction });
-  } catch (error) {
+  } catch (error:any) {
     return res.status(404).json({ message: "Error", error: error.message });
   }
 };
@@ -78,7 +78,7 @@ export const deditAmount = async (req: Request, res: Response) => {
         const transaction = await giftModel.create({
           email,
           amount: parseInt(amount),
-          typeOfTransaction: 'debit',
+          typeOfTransaction: "debit",
         });
         user.wallet -= amount;
         await user.save();
@@ -100,25 +100,35 @@ export const deditAmount = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getTransactionHistory = async (req: Request, res: Response) => {
+  try {
     const { userId } = req.params;
-  
-    try {
-      const transactions = await giftModel.find({ userId: userId });
-  
-      if (transactions.length === 0) {
-        return res.status(404).json({ message: 'No transaction history found for this user' });
-      }
-  
-      return res.status(200).json({ transactions: transactions });
-    } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    const transactions = await giftModel.find({ userId: userId });
+
+    if (transactions.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No transaction history found for this user" });
     }
-  };
-  
-  
-  
-  
-  
-  
+
+    return res.status(200).json({ transactions: transactions });
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+export const deleteTransaction = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params;
+    const transaction = await giftModel.findByIdAndDelete(_id);
+
+    return res.status(200).json({ message: "succes", data: transaction });
+  } catch (error: any) {
+    return res.status(404).json({
+      message: "error",
+      data: error.message,
+    });
+  }
+};

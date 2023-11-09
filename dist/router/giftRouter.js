@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const giftController_1 = require("../Controller/giftController");
+const router = (0, express_1.Router)();
+router.route("/:userID/credit-wallet").post(giftController_1.creditAmount);
+router.route("/:userID/debit-wallet").post(giftController_1.deditAmount);
+router.route("/:userID/get-history").get(giftController_1.getTransactionHistory);
+router.route("/:userId/credit-amount").post(giftController_1.creditUserAccount);
+exports.default = router;
