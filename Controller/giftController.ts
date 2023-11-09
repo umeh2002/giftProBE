@@ -13,7 +13,7 @@ export const creditAmount = async (req: Request, res: Response) => {
       const transaction = await giftModel.create({
         email,
         amount: parseInt(amount),
-        type: "credit",
+        typeOfTransaction: "credit",
       });
       user.wallet += parseInt(amount);
       await user.save();
@@ -50,7 +50,7 @@ export const creditUserAccount = async (req: Request, res: Response) => {
       userId: userId,
       amount: amount,
       email,
-      type: "credit",
+      typeOfTransaction: "credit",
     });
     await transaction.save();
 
@@ -78,7 +78,7 @@ export const deditAmount = async (req: Request, res: Response) => {
         const transaction = await giftModel.create({
           email,
           amount: parseInt(amount),
-          type: "debit",
+          typeOfTransaction: 'debit',
         });
         user.wallet -= amount;
         await user.save();
