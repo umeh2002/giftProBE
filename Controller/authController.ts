@@ -52,6 +52,24 @@ export const viewAll = async (req: Request, res: Response) => {
   }
 };
 
+export const viewOne = async (req: Request, res: Response) => {
+  try {
+    const { userID } = req.params;
+
+    const user = await authModel.findById(userID);
+
+    return res.status(200).json({
+      message: "Success",
+      data: user,
+    });
+  } catch (error: any) {
+    return res.status(404).json({
+      message: "Invalid",
+      data: error.message,
+    });
+  }
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     const { userID } = req.params;
