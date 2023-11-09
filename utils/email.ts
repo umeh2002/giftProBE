@@ -35,7 +35,7 @@ export const sendAccountMail = async (user: any) => {
 
     const passedData = {
       userName: user.name,
-      url: `http://localhost:5173/${token}/verify-account`,
+      url: `https://gift-pro-user.web.app/${token}/verify-account`,
     };
 
     const readData = path.join(__dirname, "../views/verifyAccount.ejs");
@@ -80,7 +80,7 @@ export const sendFirstAccountMail = async (user: any) => {
 
     const passedData = {
       userName: user.name,
-      url: `http://localhost:5173/${token}/first-verify`,
+      url: `https://gift-pro-user.web.app/${token}/first-verify`,
       code: user?.secretKey
     };
 
